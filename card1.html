@@ -75,7 +75,7 @@ function speak(msg) {
     setTimeout(() => {
         const utterance = new SpeechSynthesisUtterance(msg);
         utterance.lang = 'ko-KR';
-        utterance.rate = 0.7;   // 속도 조절
+        utterance.rate = 0.6;   // 속도 조절
         window.speechSynthesis.speak(utterance);
     }, 500); // 500ms = 0.5초
 }
