@@ -53,13 +53,13 @@
         }
 
         function speak(msg) {
-            // 재생 중인 음성 정지
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(msg);
-            utterance.lang = 'ko-KR';
-            utterance.rate = 0.7; 
-            window.speechSynthesis.speak(utterance);
-        }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(msg);
+    utterance.lang = 'ko-KR';
+    utterance.rate = 0.7;   // ⭐ 천천히
+    utterance.pitch = 1.0;
+    window.speechSynthesis.speak(utterance);
+}
 
         function nextCard() {
             currentIndex++;
