@@ -24,55 +24,63 @@
         <div class="hint">(화면을 클릭하면 다음 카드로 넘어갑니다)</div>
     </div>
 
-    <script>
-        // ★ 이 부분을 선생님의 데이터로 수정하세요 ★
-        const flashcards = [
-            { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/1.jpg", text: "여우" },
-            { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/2.jpeg", text: "아이" },
-            { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/3.jpg", text: "오이" },
-     { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/4.jpeg", text: "이유" },
-            { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/5.png", text: "우유" },
-            { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/6.png", text: "이" },
-     { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/7.png", text: "오" },
-            { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/8.jpg", text: "아이" },
-            { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/9.jpg", text: "요" },
+<script>
+const flashcards = [
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/1.jpg", text: "여우" },
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/2.jpeg", text: "아이" },
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/3.jpg", text: "오이" },
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/4.jpeg", text: "이유" },
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/5.png", text: "우유" },
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/6.png", text: "이" },
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/7.png", text: "오" },
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/8.jpg", text: "아이" },
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/9.jpg", text: "요" }
+];
 
-            // 필요한 만큼 계속 추가하세요 { img: "파일명", text: "단어" }
-        ];
+let currentIndex = 0;
+let showingAnswer = false; // ⭐ 상태 추가
 
-        let currentIndex = 0;
+function showQuestion() {
+    const card = flashcards[currentIndex];
+    document.getElementById('card-img').src = card.img;
+    document.getElementById('card-text').innerText = ""; // 글자 숨김
+    document.getElementById('progress').innerText = `${currentIndex + 1} / ${flashcards.length}`;
+}
 
-        function showCard() {
-            const card = flashcards[currentIndex];
-            document.getElementById('card-img').src = card.img;
-            document.getElementById('card-text').innerText = card.text;
-            document.getElementById('progress').innerText = `${currentIndex + 1} / ${flashcards.length}`;
-            
-            // 한국어 음성(TTS) 재생
-            speak(card.text);
-        }
+function showAnswer() {
+    const card = flashcards[currentIndex];
+    document.getElementById('card-text').innerText = card.text;
+    speak(card.text);
+}
 
-        function speak(msg) {
+function speak(msg) {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(msg);
     utterance.lang = 'ko-KR';
-    utterance.rate = 0.7;   // ⭐ 천천히
-    utterance.pitch = 1.0;
+    utterance.rate = 0.7;
     window.speechSynthesis.speak(utterance);
 }
 
-        function nextCard() {
-            currentIndex++;
-            if (currentIndex >= flashcards.length) {
-                currentIndex = 0; // 무한 루프: 마지막이면 처음으로
-            }
-            showCard();
-        }
+function nextCard() {
+    if (!showingAnswer) {
+        // ⭐ 첫 클릭 → 정답 표시
+        showAnswer();
+        showingAnswer = true;
+    } else {
+        // ⭐ 두 번째 클릭 → 다음 카드
+        currentIndex++;
+        if (currentIndex >= flashcards.length) currentIndex = 0;
+        
+        showingAnswer = false;
+        showQuestion();
+    }
+}
 
-        // 첫 카드 실행 (사용자 상호작용 후 재생을 권장하므로 처음엔 텍스트만 표시)
-        window.onload = () => {
-            document.getElementById('progress').innerText = `총 ${flashcards.length}장의 카드가 있습니다`;
-        };
-    </script>
+window.onload = () => {
+    showQuestion(); // ⭐ 처음엔 사진만 표시
+};
+</script>
+
+    
 </body>
 </html>
