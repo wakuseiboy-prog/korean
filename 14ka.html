@@ -5,18 +5,66 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>학생용 플래시카드</title>
 <style>
-body { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f0f2f5; font-family: sans-serif; }
-.card { width: 90%; max-width: 400px; height: 500px; background: white; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s; text-align: center; padding: 20px; box-sizing: border-box; }
+body { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    height: 100vh; 
+    margin: 0; 
+    background-color: #f0f2f5; 
+    font-family: sans-serif; 
+}
+.card { 
+    width: 90%; 
+    max-width: 400px; 
+    height: 500px; 
+    background: white; 
+    border-radius: 20px; 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer; 
+    transition: transform 0.2s; 
+    text-align: center; 
+    padding: 20px; 
+    box-sizing: border-box; 
+}
 .card:active { transform: scale(0.98); }
-img { max-width: 100%; max-height: 70%; border-radius: 10px; margin-bottom: 20px; pointer-events: none; }
-.text { font-size: 2rem; font-weight: bold; color: #333; min-height: 3rem; }
-.hint { color: #888; margin-top: 20px; font-size: 0.9rem; }
-.progress { margin-bottom: 10px; color: #555; }
-button { margin-bottom: 20px; font-size:1rem; padding:5px 10px; }
+img { 
+    max-width: 100%; 
+    max-height: 70%; 
+    border-radius: 10px; 
+    margin-bottom: 20px; 
+    pointer-events: none; 
+}
+.text { 
+    font-size: 2rem; 
+    font-weight: bold; 
+    color: #333; 
+    min-height: 3rem; 
+}
+.hint { 
+    color: #888; 
+    margin-top: 20px; 
+    font-size: 0.9rem; 
+}
+.progress { 
+    margin-bottom: 10px; 
+    color: #555; 
+}
+button { 
+    margin-bottom: 20px; 
+    font-size:1rem; 
+    padding:5px 10px; 
+}
 </style>
 </head>
 <body>
 
+<!-- 메뉴로 돌아가기 버튼 -->
 <button onclick="goMenu()">メニューに戻る</button>
 
 <div class="progress" id="progress">1 / 0</div>
@@ -29,29 +77,18 @@ button { margin-bottom: 20px; font-size:1rem; padding:5px 10px; }
 
 <script>
 const flashcards = [
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/14-1.png", text: "다나카씨, 덥지 않습니까?", gender: "male" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/14-2.png", text: "네, 안 덥습니다", gender: "female" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/14-3.png", text: "도쿄의 여름은 어떻습니까?", gender: "male" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/14-4.png", text: "서울과 거의 같습니다", gender: "female" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/14-5.png", text: "장마도 있습니까?", gender: "male" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/14-6.png", text: "예, 6월부터 장마가 시작됩니다", gender: "female" }
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/14-1.png", text: "다나카씨, 덥지 않습니까?" },
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/14-2.png", text: "네, 안 덥습니다" },
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/14-3.png", text: "도쿄의 여름은 어떻습니까?" },
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/14-4.png", text: "서울과 거의 같습니다" },
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/14-5.png", text: "장마도 있습니까?" },
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/14-6.png", text: "예, 6월부터 장마가 시작됩니다" }
 ];
 
 let currentIndex = 0;
 let showingAnswer = false;
-let voices = [];
 
-// 음성 불러오기 (iOS/Chrome에서 비동기 로딩 문제 방지)
-function loadVoices() {
-    voices = window.speechSynthesis.getVoices();
-    if (voices.length === 0) {
-        window.speechSynthesis.onvoiceschanged = () => {
-            voices = window.speechSynthesis.getVoices();
-        };
-    }
-}
-
-// 질문(이미지만 표시)
+// 질문만 표시
 function showQuestion() {
     const card = flashcards[currentIndex];
     document.getElementById('card-img').src = card.img;
@@ -59,33 +96,19 @@ function showQuestion() {
     document.getElementById('progress').innerText = `${currentIndex + 1} / ${flashcards.length}`;
 }
 
-// 정답(텍스트+음성)
+// 정답 표시 + TTS (0.5초 딜레이)
 function showAnswer() {
     const card = flashcards[currentIndex];
     document.getElementById('card-text').innerText = card.text;
-    speak(card.text, card.gender);
-}
-
-// 남/여 한국어 음성으로 TTS
-function speak(msg, gender="female") {
-    window.speechSynthesis.cancel();
+    
+    // 0.5초 지연 후 발음
     setTimeout(() => {
-        const utterance = new SpeechSynthesisUtterance(msg);
+        const utterance = new SpeechSynthesisUtterance(card.text);
         utterance.lang = 'ko-KR';
-        utterance.rate = 0.8;
-
-        // 한국어 음성만 선택
-        const koVoices = voices.filter(v => v.lang === 'ko-KR');
-        if (koVoices.length > 0) {
-            if (gender === "male") {
-                utterance.voice = koVoices.find(v => /남자|male/i.test(v.name)) || koVoices[0];
-            } else {
-                utterance.voice = koVoices.find(v => /여자|female/i.test(v.name)) || koVoices[0];
-            }
-        }
-
+        utterance.rate = 0.6; // 속도 조절
+        window.speechSynthesis.cancel();
         window.speechSynthesis.speak(utterance);
-    }, 500); // 0.5초 딜레이
+    }, 500);
 }
 
 // 다음 카드
@@ -108,7 +131,6 @@ function goMenu() {
 
 // 처음 로드
 window.onload = () => {
-    loadVoices();
     showQuestion();
 };
 </script>
