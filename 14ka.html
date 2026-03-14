@@ -105,7 +105,7 @@ function showAnswer() {
     setTimeout(() => {
         const utterance = new SpeechSynthesisUtterance(card.text);
         utterance.lang = 'ko-KR';
-        utterance.rate = 0.6; // 속도 조절
+        utterance.rate = 0.8; // 속도 조절
         window.speechSynthesis.cancel();
         window.speechSynthesis.speak(utterance);
     }, 500);
