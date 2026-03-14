@@ -68,7 +68,19 @@ function goMenu() {
     window.location.href = "index.html";
 }
 
+function speak(msg) {
+    window.speechSynthesis.cancel();
 
+    // 0.5초(500ms) 지연 후에 발음 시작
+    setTimeout(() => {
+        const utterance = new SpeechSynthesisUtterance(msg);
+        utterance.lang = 'ko-KR';
+        utterance.rate = 0.7;   // 속도 조절
+        window.speechSynthesis.speak(utterance);
+    }, 500); // 500ms = 0.5초
+}
+
+    
     
 function nextCard() {
     if (!showingAnswer) {
