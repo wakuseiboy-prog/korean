@@ -1,154 +1,138 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.4">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>학생용 플래시카드</title>
+
+<style>
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f2f5;
+    font-family: sans-serif;
+}
+
+.card {
+    width: 90%;
+    max-width: 400px;
+    height: 500px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.card:active { transform: scale(0.98); }
+
+img {
+    max-width: 100%;
+    max-height: 70%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    pointer-events: none;
+}
+
+.text {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    min-height: 3rem;
+}
+
+.hint {
+    color: #888;
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+.progress {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+button {
+    margin-bottom: 20px;
+    font-size: 1rem;
+    padding: 6px 12px;
+}
+</style>
 </head>
+
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="ko"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1">&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1">&lt;title&gt;학생용 플래시카드&lt;/title&gt;</p>
-<p class="p1">&lt;style&gt;</p>
-<p class="p1">body {<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: flex;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>flex-direction: column;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>align-items: center;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>justify-content: center;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>height: 100vh;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin: 0;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>background-color: #f0f2f5;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-family: sans-serif;<span class="Apple-converted-space"> </span></p>
-<p class="p1">}</p>
-<p class="p1">.card {<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>width: 90%;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>max-width: 400px;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>height: 500px;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>background: white;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 20px;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>box-shadow: 0 10px 20px rgba(0,0,0,0.1);<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>display: flex;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>flex-direction: column;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>align-items: center;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>justify-content: center;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>transition: transform 0.2s;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>text-align: center;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding: 20px;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>box-sizing: border-box;<span class="Apple-converted-space"> </span></p>
-<p class="p1">}</p>
-<p class="p1">.card:active { transform: scale(0.98); }</p>
-<p class="p1">img {<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>max-width: 100%;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>max-height: 70%;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 10px;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 20px;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>pointer-events: none;<span class="Apple-converted-space"> </span></p>
-<p class="p1">}</p>
-<p class="p1">.text {<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 2rem;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-weight: bold;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>color: #333;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>min-height: 3rem;<span class="Apple-converted-space"> </span></p>
-<p class="p1">}</p>
-<p class="p1">.hint {<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>color: #888;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 20px;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size: 0.9rem;<span class="Apple-converted-space"> </span></p>
-<p class="p1">}</p>
-<p class="p1">.progress {<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 10px;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>color: #555;<span class="Apple-converted-space"> </span></p>
-<p class="p1">}</p>
-<p class="p1">button {<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 20px;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>font-size:1rem;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>padding:5px 10px;<span class="Apple-converted-space"> </span></p>
-<p class="p1">}</p>
-<p class="p1">&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;!-- 메뉴로 돌아가기 버튼 --&gt;</p>
-<p class="p1">&lt;button onclick="goMenu()"&gt;メニューに戻る&lt;/button&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="progress" id="progress"&gt;1 / 0&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="card" onclick="nextCard()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;img id="card-img" src="" alt="이미지"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="text" id="card-text"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="hint"&gt;(画面をクリックすると次のカードに進みます。)&lt;/div&gt;</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;script&gt;</p>
-<p class="p1">const flashcards = [</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{ img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/01-1.png", text: “안녕하십니까? 저는 다나카 입니다." },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{ img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/02-2.png", text: “안녕하세요. 이유진 입니다. 잘 부탁합니다." },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{ img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/03-3.png", text: “다나카 씨는 대학생 입니까?" },</p>
-<p class="p1"><span class="Apple-converted-space">    </span>{ img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/04-4.png", text: “예, 대학생입니다." },</p>
-<p class="p2"><br></p>
-<p class="p1">];</p>
-<p class="p2"><br></p>
-<p class="p1">let currentIndex = 0;</p>
-<p class="p1">let showingAnswer = false;</p>
-<p class="p2"><br></p>
-<p class="p1">// 질문만 표시</p>
-<p class="p1">function showQuestion() {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const card = flashcards[currentIndex];</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('card-img').src = card.img;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('card-text').innerText = "";</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('progress').innerText = `${currentIndex + 1} / ${flashcards.length}`;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">// 정답 표시 + TTS (0.5초 딜레이)</p>
-<p class="p1">function showAnswer() {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const card = flashcards[currentIndex];</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('card-text').innerText = card.text;</p>
-<p class="p2"><span class="Apple-converted-space">    </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>// 0.5초 지연 후 발음</p>
-<p class="p1"><span class="Apple-converted-space">    </span>setTimeout(() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const utterance = new SpeechSynthesisUtterance(card.text);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>utterance.lang = 'ko-KR';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>utterance.rate = 0.9; // 속도 조절</p>
-<p class="p1"><span class="Apple-converted-space">        </span>window.speechSynthesis.cancel();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>window.speechSynthesis.speak(utterance);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}, 500);</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">// 다음 카드</p>
-<p class="p1">function nextCard() {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>if (!showingAnswer) {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>showAnswer();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>showingAnswer = true;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>currentIndex++;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if (currentIndex &gt;= flashcards.length) currentIndex = 0;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>showingAnswer = false;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>showQuestion();</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">// 메뉴로 돌아가기</p>
-<p class="p1">function goMenu() {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>window.location.href = "index.html";</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">// 처음 로드</p>
-<p class="p1">window.onload = () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>showQuestion();</p>
-<p class="p1">};</p>
-<p class="p1">&lt;/script&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+
+<button onclick="goMenu()">メニューに戻る</button>
+
+<div class="progress" id="progress">1 / 0</div>
+
+<div class="card" onclick="nextCard()">
+    <img id="card-img" src="" alt="이미지">
+    <div class="text" id="card-text"></div>
+    <div class="hint">(画面をクリックすると次のカードに進みます。)</div>
+</div>
+
+<script>
+const flashcards = [
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/01-1.png", text: "안녕하십니까? 저는 다나카 입니다." },
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/02-2.png", text: "안녕하세요. 이유진 입니다. 잘 부탁합니다." },
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/03-3.png", text: "다나카 씨는 대학생 입니까?" },
+    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/04-4.png", text: "예, 대학생입니다." }
+];
+
+let currentIndex = 0;
+let showingAnswer = false;
+
+function showQuestion() {
+    const card = flashcards[currentIndex];
+    document.getElementById('card-img').src = card.img;
+    document.getElementById('card-text').innerText = "";
+    document.getElementById('progress').innerText =
+        `${currentIndex + 1} / ${flashcards.length}`;
+}
+
+function showAnswer() {
+    const card = flashcards[currentIndex];
+    document.getElementById('card-text').innerText = card.text;
+
+    setTimeout(() => {
+        const utterance = new SpeechSynthesisUtterance(card.text);
+        utterance.lang = 'ko-KR';
+        utterance.rate = 0.9;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
+    }, 500);
+}
+
+function nextCard() {
+    if (!showingAnswer) {
+        showAnswer();
+        showingAnswer = true;
+    } else {
+        currentIndex++;
+        if (currentIndex >= flashcards.length) currentIndex = 0;
+        showingAnswer = false;
+        showQuestion();
+    }
+}
+
+function goMenu() {
+    window.location.href = "index.html";
+}
+
+window.onload = showQuestion;
+</script>
+
 </body>
 </html>
