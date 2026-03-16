@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>학생용 플래시카드</title>
+
+<style>
+body { 
+    display:flex; 
+    flex-direction:column; 
+    align-items:center; 
+    justify-content:center; 
+    height:100vh; 
+    margin:0; 
+    background:#f0f2f5; 
+    font-family:sans-serif; 
+}
+.card { 
+    width:90%; 
+    max-width:400px; 
+    height:500px; 
+    background:white; 
+    border-radius:20px; 
+    box-shadow:0 10px 20px rgba(0,0,0,0.1); 
+    display:flex; 
+    flex-direction:column; 
+    align-items:center; 
+    justify-content:center; 
+    cursor:pointer; 
+    transition:transform .2s; 
+    text-align:center; 
+    padding:20px; 
+    box-sizing:border-box; 
+}
+.card:active { transform:scale(.98); }
+img { 
+    max-width:100%; 
+    max-height:70%; 
+    border-radius:10px; 
+    margin-bottom:20px; 
+    pointer-events:none; 
+}
+.text { 
+    font-size:2rem; 
+    font-weight:bold; 
+    color:#333; 
+    min-height:3rem; 
+}
+.hint { 
+    color:#888; 
+    margin-top:20px; 
+    font-size:.9rem; 
+}
+.progress { 
+    margin-bottom:10px; 
+    color:#555; 
+}
+button { 
+    margin-bottom:20px; 
+    font-size:1rem; 
+    padding:5px 10px; 
+}
+</style>
+</head>
+
+<body>
+
+<button onclick="goMenu()">メニューに戻る</button>
+
+<div class="progress" id="progress">1 / 0</div>
+
+<div class="card" onclick="nextCard()">
+    <img id="card-img" src="">
+    <div class="text" id="card-text"></div>
+    <div class="hint">(画面をクリックすると次のカードに進みます。)</div>
+</div>
+
+<script>
+
+  
+const flashcards = [
+    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/13-1.png", text:"그것은 무슨 책입니까?", audio:"13-1.mp3" },
+    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/13-2.png", text:"한국어 교과서 입니다", audio:"13-2.mp3" },
+    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/13-3.png", text:"한국어는 어디서 배웁니까?", audio:"13-3.mp3" },
+    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/13-4.png", text:"학교에서 배웁니다" , audio:"13-4.mp3"},
+    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/13-5.png", text:"재미있습니까?", audio:"13-5.mp3" },
+  { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/13-6.png", text:"네, 아주 재미있습니다", audio:"13-6.mp3" }
+   
+];
+
+let currentIndex = 0;
+let step = 0; // ⭐ 0=이미지, 1=문자, 2=음성
+
+// ⭐ 재사용 Audio 객체
+const player = new Audio();
+player.preload = "auto";
+
+// 이미지 표시
+function showQuestion() {
+    const card = flashcards[currentIndex];
+
+    document.getElementById('card-img').src = card.img;
+    document.getElementById('card-text').innerText = "";
+    document.getElementById('progress').innerText =
+        `${currentIndex + 1} / ${flashcards.length}`;
+
+    step = 0;
+
+    // 음성 있으면 미리 로딩
+    if (card.audio) player.src = card.audio;
+}
+
+// 문자 표시
+function showText() {
+    const card = flashcards[currentIndex];
+    document.getElementById('card-text').innerText = card.text;
+}
+
+// 음성 재생
+function playAudio() {
+    const card = flashcards[currentIndex];
+    if (!card.audio) return; // 음성 없으면 아무것도 안 함
+
+    player.currentTime = 0;
+    player.play();
+}
+
+// 클릭 시 단계 진행
+function nextCard() {
+
+    if (step === 0) {
+
+        showText();
+        step = 1;
+
+    } else if (step === 1) {
+
+        playAudio();
+        step = 2;
+
+    } else {
+
+        currentIndex++;
+        if (currentIndex >= flashcards.length) currentIndex = 0;
+
+        showQuestion();
+    }
+}
+
+function goMenu() {
+    window.location.href = "index.html";
+}
+
+window.onload = showQuestion;
+
+</script>
+
+</body>
+</html>
