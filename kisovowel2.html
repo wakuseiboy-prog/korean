@@ -1,107 +1,157 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>한국어 암기카드</title>
-    <style>
-        body { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f0f2f5; font-family: sans-serif; }
-        .card { width: 90%; max-width: 400px; height: 500px; background: white; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s; text-align: center; padding: 20px; box-sizing: border-box; }
-        .card:active { transform: scale(0.98); }
-        img { max-width: 100%; max-height: 70%; border-radius: 10px; margin-bottom: 20px; pointer-events: none; }
-        .text { font-size: 2rem; font-weight: bold; color: #333; min-height: 3rem; }
-        .hint { color: #888; margin-top: 20px; font-size: 0.9rem; }
-        .progress { margin-bottom: 10px; color: #555; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국어 암기카드</title>
+
+<style>
+body {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height:100vh;
+    margin:0;
+    background:#f0f2f5;
+    font-family:sans-serif;
+}
+
+.card {
+    width:90%;
+    max-width:400px;
+    height:500px;
+    background:white;
+    border-radius:20px;
+    box-shadow:0 10px 20px rgba(0,0,0,0.1);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:transform .2s;
+    text-align:center;
+    padding:20px;
+}
+
+.card:active { transform:scale(.98); }
+
+img {
+    max-width:100%;
+    max-height:65%;
+    border-radius:10px;
+    margin-top:15px;
+    display:none;
+}
+
+.text {
+    font-size:2.3rem;
+    font-weight:bold;
+    color:#333;
+    min-height:3rem;
+}
+
+.hint {
+    color:#888;
+    margin-top:20px;
+    font-size:.9rem;
+}
+
+.progress { margin-bottom:10px; color:#555; }
+</style>
 </head>
+
 <body>
-<!-- 메뉴로 돌아가기 버튼 추가 -->
-    <button onclick="goMenu()" style="margin-bottom:20px; font-size:1rem; padding:5px 10px;">
-        メニューに戻る
-    </button>
-    <div class="progress" id="progress">1 / 0</div>
-    
-    <div class="card" onclick="nextCard()">
-        <img id="card-img" src="" alt="이미지">
-        <div class="text" id="card-text"></div>
-        <div class="hint">(画面をクリックすると次のカードに進みます。)</div>
-    </div>
+
+<button onclick="goMenu()" style="margin-bottom:20px;font-size:1rem;padding:5px 10px;">
+メニューに戻る
+</button>
+
+<div class="progress" id="progress"></div>
+
+<div class="card" onclick="nextCard()">
+    <div class="text" id="card-text"></div>
+    <img id="card-img" src="">
+    <div class="hint">(画面をクリックすると次へ)</div>
+</div>
 
 <script>
+
 const flashcards = [
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v01.png", text: "귀" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v02.png", text: "사과" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v03.png", text: "메뉴" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v04.png", text: "의자" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v05.png", text: "돼지" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v06.png", text: "와이" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v07.png", text: "스위스" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v08.png", text: "의사" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v09.png", text: "샤워" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v10.png", text: "하와이" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v11.png", text: "스타워즈" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v12.png", text: "왜" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v13.png", text: "레고" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v14.png", text: "시계" },
-    { img: "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v15.png", text: "로프웨이" }
+ { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v01.png", text:"귀", audio:"kisov01.mp3" },
+ { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v02.png", text:"사과", audio:"kisov02.mp3" },
+ { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v03.png", text:"메뉴", audio:"kisov03.mp3" },
+ { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v04.png", text:"의자", audio:"kisov04.mp3" },
+ { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v05.png", text:"돼지", audio:"kisov05.mp3" },
+ { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v06.png", text:"와이", audio:"kisov06.mp3" },
+ { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v07.png", text:"스위스", audio:"kisov07.mp3" },
+ { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v08.png", text:"의사", audio:"kisov08.mp3" },
+ { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v09.png", text:"샤워", audio:"kisov09.mp3" },
+ { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v10.png", text:"하와이", audio:"kisov10.mp3" },
+ { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v11.png", text:"스타워즈", audio:"kisov11.mp3" },
+ { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v12.png", text:"왜", audio:"kisov12.mp3" },
+ { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v13.png", text:"레고", audio:"kisov13.mp3" },
+ { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v14.png", text:"시계", audio:"kisov14.mp3" },
+ { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/v15.png", text:"로프웨이", audio:"kisov15.mp3" }
 ];
 
-let currentIndex = 0;
-let step = 0; // ⭐ 0=이미지, 1=문자, 2=음성
+let index = 0;
+let step = 0;
+let audio = new Audio();
 
-function showQuestion() {
-    const card = flashcards[currentIndex];
-    document.getElementById('card-img').src = card.img;
-    document.getElementById('card-text').innerText = "";
-    document.getElementById('progress').innerText =
-        `${currentIndex + 1} / ${flashcards.length}`;
+function showText() {
+    const c = flashcards[index];
+    document.getElementById("card-text").innerText = c.text;
+    document.getElementById("card-img").style.display = "none";
+    updateProgress();
     step = 0;
 }
 
-function showText() {
-    const card = flashcards[currentIndex];
-    document.getElementById('card-text').innerText = card.text;
+function showImage() {
+    const c = flashcards[index];
+    const img = document.getElementById("card-img");
+    img.src = c.img;
+    img.style.display = "block";
 }
 
-function speak(msg) {
-    window.speechSynthesis.cancel();
+function playAudio() {
+    audio.pause();
+    audio = new Audio(flashcards[index].audio);
+    audio.play().catch(()=>{});
+}
 
-    setTimeout(() => {
-        const utterance = new SpeechSynthesisUtterance(msg);
-        utterance.lang = 'ko-KR';
-        utterance.rate = 0.6;
-        window.speechSynthesis.speak(utterance);
-    }, 500);
+function nextCard() {
+
+    if (step === 0) {
+        // 문자 → 이미지
+        showImage();
+        step = 1;
+
+    } else if (step === 1) {
+        // 이미지 → 음성
+        playAudio();
+        step = 2;
+
+    } else {
+        // 다음 카드
+        index++;
+        if (index >= flashcards.length) index = 0;
+        showText();
+    }
+}
+
+function updateProgress() {
+    document.getElementById("progress").innerText =
+        `${index + 1} / ${flashcards.length}`;
 }
 
 function goMenu() {
     window.location.href = "index.html";
 }
 
-function nextCard() {
+window.onload = showText;
 
-    if (step === 0) {
-        // ⭐ 첫 클릭 → 문자 표시
-        showText();
-        step = 1;
-
-    } else if (step === 1) {
-        // ⭐ 두 번째 클릭 → 음성 재생
-        const card = flashcards[currentIndex];
-        speak(card.text);
-        step = 2;
-
-    } else {
-        // ⭐ 세 번째 클릭 → 다음 카드
-        currentIndex++;
-        if (currentIndex >= flashcards.length) currentIndex = 0;
-        showQuestion();
-    }
-}
-
-window.onload = showQuestion;
 </script>
-    
+
 </body>
 </html>
