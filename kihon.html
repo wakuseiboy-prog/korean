@@ -38,10 +38,10 @@ body {
 
 img {
     max-width:100%;
-    max-height:65%;
+    max-height:60%;
     border-radius:10px;
     margin-bottom: 20px;
-    display: none; /* 기본 숨김 */
+    display: block; /* 기본적으로 보이게 설정 */
 }
 
 .text {
@@ -49,7 +49,7 @@ img {
     font-weight:bold;
     color:#333;
     min-height:3.5rem;
-    display: none; /* 기본 숨김 */
+    visibility: hidden; /* 영역은 차지하되 보이지 않게 설정 */
 }
 
 .hint {
@@ -59,28 +59,36 @@ img {
 }
 
 .progress { margin-bottom:10px; color:#555; }
+
+button {
+    margin-bottom:20px;
+    font-size:1rem;
+    padding:10px 20px;
+    cursor: pointer;
+}
 </style>
 </head>
 
 <body>
 
-<button onclick="goMenu()" style="margin-bottom:20px;font-size:1rem;padding:5px 10px;">
-메뉴로 돌아가기
+<button onclick="goMenu()">
+メニューに戻る
 </button>
 
-<div class="progress" id="progress"></div>
+<div class="progress" id="progress">0 / 0</div>
 
 <div class="card" onclick="handleCardClick()">
-    <img id="card-img" src="" alt="단어 이미지">
+    <img id="card-img" src="" alt="card image">
     <div class="text" id="card-text"></div>
-    <div class="hint" id="card-hint">이미지를 보고 단어를 맞춰보세요!</div>
+    <div class="hint" id="card-hint">이미지를 보고 맞춰보세요!</div>
 </div>
 
 <script>
+// 데이터 배열
 const flashcards = [
  { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon01.png", text:"하마", audio:"kihon01.mp3" },
  { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon02.png", text:"다리", audio:"kihon02.mp3" },
  { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon03.png", text:"포도", audio:"kihon03.mp3" },
  { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon04.png", text:"버스", audio:"kihon04.mp3" },
  { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon05.png", text:"오이", audio:"kihon05.mp3" },
- { img:"https://raw.github
+ { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon06.png", text:"바다", audio:"
