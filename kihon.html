@@ -40,16 +40,16 @@ img {
     max-width:100%;
     max-height:65%;
     border-radius:10px;
-    margin-bottom: 15px; /* 위치 조정 */
-    display:none;
+    margin-bottom: 20px;
+    display: none; /* 기본 숨김 */
 }
 
 .text {
     font-size:2.3rem;
     font-weight:bold;
     color:#333;
-    min-height:3rem;
-    display:none; /* 처음엔 숨김 */
+    min-height:3.5rem;
+    display: none; /* 기본 숨김 */
 }
 
 .hint {
@@ -65,86 +65,22 @@ img {
 <body>
 
 <button onclick="goMenu()" style="margin-bottom:20px;font-size:1rem;padding:5px 10px;">
-メニューに戻る
+메뉴로 돌아가기
 </button>
 
 <div class="progress" id="progress"></div>
 
-<div class="card" onclick="nextCard()">
-    <img id="card-img" src="">
+<div class="card" onclick="handleCardClick()">
+    <img id="card-img" src="" alt="단어 이미지">
     <div class="text" id="card-text"></div>
-    <div class="hint">(画面をクリックすると次へ)</div>
+    <div class="hint" id="card-hint">이미지를 보고 단어를 맞춰보세요!</div>
 </div>
 
 <script>
-
 const flashcards = [
  { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon01.png", text:"하마", audio:"kihon01.mp3" },
  { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon02.png", text:"다리", audio:"kihon02.mp3" },
  { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon03.png", text:"포도", audio:"kihon03.mp3" },
  { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon04.png", text:"버스", audio:"kihon04.mp3" },
  { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon05.png", text:"오이", audio:"kihon05.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon06.png", text:"바다", audio:"kihon06.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon07.png", text:"기타", audio:"kihon07.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon08.png", text:"야구", audio:"kihon08.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon09.png", text:"치마", audio:"kihon09.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon10.png", text:"구두", audio:"kihon10.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon11.png", text:"피자", audio:"kihon11.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon12.png", text:"쿠키", audio:"kihon12.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon13.png", text:"두부", audio:"kihon13.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon14.png", text:"호두", audio:"kihon14.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon15.png", text:"나비", audio:"kihon15.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon16.png", text:"티비", audio:"kihon16.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon17.png", text:"파티", audio:"kihon17.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon18.png", text:"기차", audio:"kihon18.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon19.png", text:"사자", audio:"kihon19.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon20.png", text:"고기", audio:"kihon20.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon21.png", text:"오리", audio:"kihon21.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon22.png", text:"바지", audio:"kihon22.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon23.png", text:"지도", audio:"kihon23.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon24.png", text:"이야기", audio:"kihon24.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon25.png", text:"보다", audio:"kihon25.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon26.png", text:"비", audio:"kihon26.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon27.png", text:"가다", audio:"kihon27.mp3" },
- { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/kihon28.png", text:"오다", audio:"kihon28.mp3" },
-];
-
-let index = 0;
-let step = 0;
-let audio = new Audio();
-
-// 1. 이미지를 먼저 보여주는 함수
-function showImage() {
-    const c = flashcards[index];
-    const img = document.getElementById("card-img");
-    const txt = document.getElementById("card-text");
-    
-    img.src = c.img;
-    img.style.display = "block"; // 이미지 보임
-    txt.style.display = "none";  // 텍스트는 아직 숨김
-    
-    updateProgress();
-    step = 0; // 초기 단계 설정
-}
-
-// 2. 문자를 보여주는 함수
-function showText() {
-    const c = flashcards[index];
-    const txt = document.getElementById("card-text");
-    txt.innerText = c.text;
-    txt.style.display = "block"; // 텍스트 보임
-}
-
-// 3. 음성 재생 함수
-function playAudio() {
-    audio.pause();
-    audio = new Audio(flashcards[index].audio);
-    audio.play().catch(()=>{});
-}
-
-// 클릭 이벤트 로직 수정
-function nextCard() {
-    if (step === 0) {
-        // [클릭 1] 이미지 -> 문자 노출
-        showText();
-        step = 1
+ { img:"https://raw.github
