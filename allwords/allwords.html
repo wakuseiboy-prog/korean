@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국어 암기카드</title>
+
+<style>
+body {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height:100vh;
+    margin:0;
+    background:#f0f2f5;
+    font-family:sans-serif;
+}
+
+.card {
+    width:90%;
+    max-width:400px;
+    height:500px;
+    background:white;
+    border-radius:20px;
+    box-shadow:0 10px 20px rgba(0,0,0,0.1);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    text-align:center;
+    padding:20px;
+}
+
+img {
+    max-width:100%;
+    max-height:65%;
+    border-radius:10px;
+    margin-bottom:15px;
+    object-fit: contain;
+}
+
+.text {
+    font-size:2.3rem;
+    font-weight:bold;
+    color:#333;
+    min-height:3rem;
+}
+
+.progress { margin-bottom:10px; color:#555; }
+
+.hint {
+    color:#888;
+    margin-top:20px;
+    font-size:.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<button onclick="goMenu()" style="margin-bottom:20px;font-size:1rem;padding:5px 10px; cursor:pointer;">
+메뉴로 돌아가기
+</button>
+
+<div class="progress" id="progress"></div>
+
+<div class="card" onclick="nextStep()">
+    <img id="card-img" alt="카드 이미지">
+    <div class="text" id="card-text"></div>
+    <div class="hint">(화면을 클릭하면 다음으로)</div>
+</div>
+
+<script>
+const baseUrl = "https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/allwords/";
+
+// 73개의 플래시카드 데이터 리스트
+// text: "홍길동" 부분을 실제 단어로 수정하세요.
+const flashcards = [
+    { img: baseUrl + "01.png", audio: baseUrl + "01.mp3", text: "홍길동" },
+    { img: baseUrl + "02.png", audio: baseUrl + "02.mp3", text: "홍길동" },
+    { img: baseUrl + "03.png", audio: baseUrl + "03.mp3", text: "홍길동" },
+    { img: baseUrl + "04.png", audio: baseUrl + "04.mp3", text: "홍길동" },
+    { img: baseUrl + "05.png", audio: baseUrl + "05.mp3", text: "홍길동" },
+    { img: baseUrl + "06.png", audio: baseUrl + "06.mp3", text: "홍길동" },
+    { img: baseUrl + "07.png", audio: baseUrl + "07.mp3", text: "홍길동" },
+    { img: baseUrl + "08.png", audio: baseUrl + "08.mp3", text: "홍길동" },
+    { img: baseUrl + "09.png", audio: baseUrl + "09.mp3", text: "홍길동" },
+    { img: baseUrl + "10.png", audio: baseUrl + "10.mp3", text: "홍길동" },
+    { img: baseUrl + "11.png", audio: baseUrl + "11.mp3", text: "홍길동" },
+    { img: baseUrl + "12.png", audio: baseUrl + "12.mp3", text: "홍길동" },
+    { img: baseUrl + "13.png", audio: baseUrl + "13.mp3", text: "홍길동" },
+    { img: baseUrl + "14.png", audio: baseUrl + "14.mp3", text: "홍길동" },
+    { img: baseUrl + "15.png", audio: baseUrl + "15.mp3", text: "홍길동" },
+    { img: baseUrl + "16.png", audio: baseUrl + "16.mp3", text: "홍길동" },
+    { img: baseUrl + "17.png", audio: baseUrl + "17.mp3", text: "홍길동" },
+    { img: baseUrl + "18.png", audio: baseUrl + "18.mp3", text: "홍길동" },
+    { img: baseUrl + "19.png", audio: baseUrl + "19.mp3", text: "홍길동" },
+    { img: baseUrl + "20.png", audio: baseUrl + "20.mp3", text: "홍길동" },
+    { img: baseUrl + "21.png", audio: baseUrl + "21.mp3", text: "홍길동" },
+    { img: baseUrl + "22.png", audio: baseUrl + "22.mp3", text: "홍길동" },
+    { img: baseUrl + "23.png", audio: baseUrl + "23.mp3", text: "홍길동" },
+    { img: baseUrl + "24.png", audio: baseUrl + "24.mp3", text: "홍길동" },
+    { img: baseUrl + "25.png", audio: baseUrl + "25.mp3", text: "홍길동" },
+    { img: baseUrl + "26.png", audio: baseUrl + "26.mp3", text: "홍길동" },
+    { img: baseUrl + "27.png", audio: baseUrl + "27.mp3", text: "홍길동" },
+    { img: baseUrl + "28.png", audio: baseUrl + "28.mp3", text: "홍길동" },
+    { img: baseUrl + "29.png", audio: baseUrl + "29.mp3", text: "홍길동" },
+    { img: baseUrl + "30.png", audio: baseUrl + "30.mp3", text: "홍길동" },
+    { img: baseUrl + "31.png", audio: baseUrl + "31.mp3", text: "홍길동" },
+    { img: baseUrl + "32.png", audio: baseUrl + "32.mp3", text: "홍길동" },
+    { img: baseUrl + "33.png", audio: baseUrl + "33.mp3", text: "홍길동" },
+    { img: baseUrl + "34.png", audio: baseUrl + "34.mp3", text: "홍길동" },
+    { img: baseUrl + "35.png", audio: baseUrl + "35.mp3", text: "홍길동" },
+    { img: baseUrl + "36.png", audio: baseUrl + "36.mp3", text: "홍길동" },
+    { img: baseUrl + "37.png", audio: baseUrl + "37.mp3", text: "홍길동" },
+    { img: baseUrl + "38.png", audio: baseUrl + "38.mp3", text: "홍길동" },
+    { img: baseUrl + "39.png", audio: baseUrl + "39.mp3", text: "홍길동" },
+    { img: baseUrl + "40.png", audio: baseUrl + "40.mp3", text: "홍길동" },
+    { img: baseUrl + "41.png", audio: baseUrl + "41.mp3", text: "홍길동" },
+    { img: baseUrl + "42.png", audio: baseUrl + "42.mp3", text: "홍길동" },
+    { img: baseUrl + "43.png", audio: baseUrl + "43.mp3", text: "홍길동" },
+    { img: baseUrl + "44.png", audio: baseUrl + "44.mp3", text: "홍길동" },
+    { img: baseUrl + "45.png", audio: baseUrl + "45.mp3", text: "홍길동" },
+    { img: baseUrl + "46.png", audio: baseUrl + "46.mp3", text: "홍길동" },
+    { img: baseUrl + "47.png", audio: baseUrl + "47.mp3", text: "홍길동" },
+    { img: baseUrl + "48.png", audio: baseUrl + "48.mp3", text: "홍길동" },
+    { img: baseUrl + "49.png", audio: baseUrl + "49.mp3", text: "홍길동" },
+    { img: baseUrl + "50.png", audio: baseUrl + "50.mp3", text: "홍길동" },
+    { img: baseUrl + "51.png", audio: baseUrl + "51.mp3", text: "홍길동" },
+    { img: baseUrl + "52.png", audio: baseUrl + "52.mp3", text: "홍길동" },
+    { img: baseUrl + "53.png", audio: baseUrl + "53.mp3", text: "홍길동" },
+    { img: baseUrl + "54.png", audio: baseUrl + "54.mp3", text: "홍길동" },
+    { img: baseUrl + "55.png", audio: baseUrl + "55.mp3", text: "홍길동" },
+    { img: baseUrl + "56.png", audio: baseUrl + "56.mp3", text: "홍길동" },
+    { img: baseUrl + "57.png", audio: baseUrl + "57.mp3", text: "홍길동" },
+    { img: baseUrl + "58.png", audio: baseUrl + "58.mp3", text: "홍길동" },
+    { img: baseUrl + "59.png", audio: baseUrl + "59.mp3", text: "홍길동" },
+    { img: baseUrl + "60.png", audio: baseUrl + "60.mp3", text: "홍길동" },
+    { img: baseUrl + "61.png", audio: baseUrl + "61.mp3", text: "홍길동" },
+    { img: baseUrl + "62.png", audio: baseUrl + "62.mp3", text: "홍길동" },
+    { img: baseUrl + "63.png", audio: baseUrl + "63.mp3", text: "홍길동" },
+    { img: baseUrl + "64.png", audio: baseUrl + "64.mp3", text: "홍길동" },
+    { img: baseUrl + "65.png", audio: baseUrl + "65.mp3", text: "홍길동" },
+    { img: baseUrl + "66.png", audio: baseUrl + "66.mp3", text: "홍길동" },
+    { img: baseUrl + "67.png", audio: baseUrl + "67.mp3", text: "홍길동" },
+    { img: baseUrl + "68.png", audio: baseUrl + "68.mp3", text: "홍길동" },
+    { img: baseUrl + "69.png", audio: baseUrl + "69.mp3", text: "홍길동" },
+    { img: baseUrl + "70.png", audio: baseUrl + "70.mp3", text: "홍길동" },
+    { img: baseUrl + "71.png", audio: baseUrl + "71.mp3", text: "홍길동" },
+    { img: baseUrl + "72.png", audio: baseUrl + "72.mp3", text: "홍길동" },
+    { img: baseUrl + "73.png", audio: baseUrl + "73.mp3", text: "홍길동" }
+];
+
+let index = 0;
+let step = 0;
+let audioObj = new Audio();
+
+function render() {
+    const c = flashcards[index];
+    const img = document.getElementById("card-img");
+    const text = document.getElementById("card-text");
+
+    img.src = c.img;
+
+    if (step === 0) {
+        text.innerText = "";
+    } else if (step === 1) {
+        text.innerText = c.text;
+    } else if (step === 2) {
+        audioObj.pause();
+        audioObj = new Audio(c.audio);
+        audioObj.play().catch(()=>{});
+    }
+
+    document.getElementById("progress").innerText =
+        `${index + 1} / ${flashcards.length}`;
+}
+
+function nextStep() {
+    step++;
+
+    if (step > 2) {
+        index++;
+        if (index >= flashcards.length) index = 0;
+        step = 0;
+    }
+
+    render();
+}
+
+function goMenu() {
+    window.location.href = "index.html";
+}
+
+window.onload = function() {
+    render();
+};
+</script>
+
+</body>
+</html>
