@@ -79,18 +79,18 @@ button {
 <script>
 
 const flashcards = [
-    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-1.png", text:"1시", audio:"w-1.mp3" },
-    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-2.png", text:"2시", audio:"w-2.mp3" },
-    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-3.png", text:"3시", audio:"w-3.mp3" },
-    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-4.png", text:"4시", audio:"w-4.mp3" },
-    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-5.png", text:"5시", audio:"w-5.mp3" },
-    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-6.png", text:"6시", audio:"w-6.mp3" },
-    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-7.png", text:"7시", audio:"w-7.mp3" },
-    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-8.png", text:"8시", audio:"w-8.mp3" },
-    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-9.png", text:"9시", audio:"w-9.mp3" },
-    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-10.png", text:"10시", audio:"w-10.mp3" },
-    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-11.png", text:"11시", audio:"w-11.mp3" },
-    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-12.png", text:"12시", audio:"w-12.mp3" }
+    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-1.png", text:"1시56분", audio:"w-1.mp3" },
+    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-2.png", text:"2시55분", audio:"w-2.mp3" },
+    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-3.png", text:"3시35분", audio:"w-3.mp3" },
+    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-4.png", text:"4시5분", audio:"w-4.mp3" },
+    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-5.png", text:"5시36분", audio:"w-5.mp3" },
+    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-6.png", text:"6시49분", audio:"w-6.mp3" },
+    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-7.png", text:"7시30분", audio:"w-7.mp3" },
+    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-8.png", text:"8시25분", audio:"w-8.mp3" },
+    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-9.png", text:"9시40분", audio:"w-9.mp3" },
+    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-10.png", text:"10시10분", audio:"w-10.mp3" },
+    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-11.png", text:"11시13분", audio:"w-11.mp3" },
+    { img:"https://raw.githubusercontent.com/wakuseiboy-prog/korean/main/w-12.png", text:"12시18분", audio:"w-12.mp3" }
 ];
 
 let shuffled = [];
